@@ -1,0 +1,3 @@
+Tipografías sugeridas
+Wordmark/Headlines: Poppins / Nunito (800)
+UI/Body: Inter (400–600)
