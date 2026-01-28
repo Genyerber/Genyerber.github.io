@@ -1,0 +1,359 @@
+@import '../../../../../styles/variables';
+
+.form-section {
+  padding: $spacing-xxl 0;
+  background: linear-gradient(180deg, $light-gray 0%, lighten($light-gray, 3%) 100%);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: -200px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba($primary-blue, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 10s ease-in-out infinite;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -200px;
+    right: -200px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba($cyan, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 12s ease-in-out infinite reverse;
+  }
+
+  .form-header {
+    text-align: center;
+    margin-bottom: $spacing-xxl;
+    animation: fadeInUp 0.8s ease-out;
+    position: relative;
+    z-index: 1;
+
+    h2 {
+      color: $text-dark;
+      margin-bottom: $spacing-sm;
+      position: relative;
+      display: inline-block;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(90deg, $primary-blue, $cyan);
+        border-radius: 2px;
+      }
+    }
+
+    .form-subtitle {
+      font-size: 1.15rem;
+      color: lighten($text-dark, 25%);
+      margin-top: $spacing-md;
+    }
+  }
+
+  .form-container {
+    max-width: 650px;
+    margin: 0 auto;
+    background: $white;
+    padding: $spacing-xl;
+    border-radius: 24px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+    animation: fadeInScale 0.8s ease-out 0.2s backwards;
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgba($primary-blue, 0.1);
+    transition: all $transition-normal;
+
+    &:hover {
+      box-shadow: 0 12px 50px rgba($primary-blue, 0.15);
+      transform: translateY(-5px);
+    }
+
+    @media (min-width: $breakpoint-tablet) {
+      padding: $spacing-xxl;
+    }
+  }
+
+  .contact-form {
+    .form-group {
+      margin-bottom: $spacing-lg;
+      animation: fadeInUp 0.6s ease-out backwards;
+
+      &:nth-child(1) { animation-delay: 0.3s; }
+      &:nth-child(2) { animation-delay: 0.4s; }
+      &:nth-child(3) { animation-delay: 0.5s; }
+      &:nth-child(4) { animation-delay: 0.6s; }
+      &:nth-child(5) { animation-delay: 0.7s; }
+
+      label {
+        display: block;
+        font-weight: $weight-semibold;
+        color: $text-dark;
+        margin-bottom: $spacing-xs;
+        font-size: 0.95rem;
+        transition: color $transition-fast;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: $spacing-md;
+        border: 2px solid lighten($text-dark, 60%);
+        border-radius: 12px;
+        font-size: 1rem;
+        font-family: $font-body;
+        transition: all $transition-normal;
+        background-color: $white;
+        position: relative;
+
+        &:focus {
+          outline: none;
+          border-color: $primary-blue;
+          box-shadow: 0 0 0 4px rgba($primary-blue, 0.1);
+          transform: translateY(-2px);
+
+          & + label {
+            color: $primary-blue;
+          }
+        }
+
+        &.error {
+          border-color: #dc3545;
+          animation: shake 0.5s;
+        }
+
+        &::placeholder {
+          color: lighten($text-dark, 50%);
+        }
+
+        &:hover:not(:focus) {
+          border-color: lighten($primary-blue, 20%);
+        }
+      }
+
+      select {
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10'%3E%3Cpath fill='%230658F6' d='M7 10L0 0h14z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right $spacing-md center;
+        padding-right: $spacing-xxl;
+        
+        &:hover {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10'%3E%3Cpath fill='%2329D3D3' d='M7 10L0 0h14z'/%3E%3C/svg%3E");
+        }
+      }
+
+      .error-message {
+        display: block;
+        color: #dc3545;
+        font-size: 0.85rem;
+        margin-top: $spacing-xs;
+        animation: fadeIn 0.3s;
+        font-weight: $weight-medium;
+      }
+    }
+
+    .checkbox-group {
+      .checkbox-label {
+        display: flex;
+        align-items: flex-start;
+        gap: $spacing-sm;
+        cursor: pointer;
+        font-weight: $weight-regular;
+        transition: all $transition-fast;
+        padding: $spacing-sm;
+        border-radius: 8px;
+
+        &:hover {
+          background-color: lighten($light-gray, 3%);
+        }
+
+        input[type="checkbox"] {
+          width: 20px;
+          height: 20px;
+          margin-top: 2px;
+          cursor: pointer;
+          flex-shrink: 0;
+          accent-color: $primary-blue;
+          transition: transform $transition-fast;
+
+          &:hover {
+            transform: scale(1.1);
+          }
+        }
+
+        span {
+          font-size: 0.95rem;
+          color: lighten($text-dark, 20%);
+        }
+
+        .link {
+          color: $primary-blue;
+          text-decoration: underline;
+          font-weight: $weight-semibold;
+          transition: color $transition-fast;
+
+          &:hover {
+            color: darken($primary-blue, 10%);
+          }
+        }
+      }
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, $primary-blue, darken($primary-blue, 5%));
+      color: $white;
+      padding: $spacing-md $spacing-lg;
+      border-radius: 12px;
+      font-weight: $weight-bold;
+      font-size: 1.1rem;
+      margin-top: $spacing-md;
+      box-shadow: 0 6px 20px rgba($primary-blue, 0.3);
+      transition: all $transition-normal;
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.6s ease-out 0.8s backwards;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: left 0.6s;
+      }
+
+      &:hover:not(:disabled) {
+        background: linear-gradient(135deg, darken($primary-blue, 5%), darken($primary-blue, 10%));
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba($primary-blue, 0.4);
+
+        &::before {
+          left: 100%;
+        }
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(-1px);
+      }
+
+      &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+    }
+
+    .alert {
+      margin-top: $spacing-lg;
+      padding: $spacing-md $spacing-lg;
+      border-radius: 12px;
+      font-size: 1rem;
+      text-align: center;
+      animation: slideInUp 0.5s ease-out;
+      font-weight: $weight-semibold;
+
+      &.alert-success {
+        background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        color: #155724;
+        border: 2px solid #28a745;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+      }
+
+      &.alert-error {
+        background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+        color: #721c24;
+        border: 2px solid #dc3545;
+        box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+      }
+    }
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-30px) translateX(20px);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  75% {
+    transform: translateX(10px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

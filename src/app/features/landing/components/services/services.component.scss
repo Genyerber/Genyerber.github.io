@@ -1,0 +1,242 @@
+@import '../../../../../styles/variables';
+
+.services {
+  padding: $spacing-xxl 0;
+  background: $white;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba($cyan, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: pulse 8s ease-in-out infinite;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -100px;
+    left: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba($primary-blue, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: pulse 8s ease-in-out infinite reverse;
+  }
+
+  .services-header {
+    text-align: center;
+    margin-bottom: $spacing-xxl;
+    animation: fadeInUp 0.8s ease-out;
+    position: relative;
+    z-index: 1;
+
+    h2 {
+      color: $text-dark;
+      position: relative;
+      display: inline-block;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(90deg, $primary-blue, $cyan);
+        border-radius: 2px;
+      }
+    }
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-md;
+    position: relative;
+    z-index: 1;
+
+    @media (min-width: $breakpoint-tablet) {
+      gap: $spacing-lg;
+    }
+
+    @media (min-width: $breakpoint-desktop) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .service-card {
+    background: linear-gradient(135deg, $white 0%, lighten($light-gray, 2%) 100%);
+    padding: $spacing-md;
+    border-radius: 16px;
+    text-align: center;
+    border: 2px solid $light-gray;
+    transition: all $transition-normal;
+    position: relative;
+    overflow: hidden;
+    animation: fadeInScale 0.6s ease-out backwards;
+
+    @media (min-width: $breakpoint-tablet) {
+      padding: $spacing-xl;
+    }
+
+    &:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    &:nth-child(4) {
+      animation-delay: 0.4s;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(135deg, 
+        transparent 0%, 
+        rgba($primary-blue, 0.05) 50%, 
+        transparent 100%);
+      transform: rotate(45deg);
+      transition: all 0.6s;
+      opacity: 0;
+    }
+
+    &:hover {
+      border-color: $primary-blue;
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 15px 40px rgba($primary-blue, 0.2);
+
+      &::before {
+        opacity: 1;
+        top: -100%;
+        left: -100%;
+      }
+
+      .service-icon {
+        transform: scale(1.1);
+        background: linear-gradient(135deg, rgba($primary-blue, 0.15), rgba($cyan, 0.15));
+        box-shadow: 0 8px 25px rgba($primary-blue, 0.2);
+
+        img {
+          transform: scale(1.15) rotate(360deg);
+        }
+      }
+
+      .service-title {
+        color: $primary-blue;
+      }
+    }
+
+    > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .service-icon {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto $spacing-sm;
+      background: linear-gradient(135deg, rgba($primary-blue, 0.1), rgba($cyan, 0.1));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all $transition-normal;
+      box-shadow: 0 4px 15px rgba($primary-blue, 0.1);
+
+      @media (min-width: $breakpoint-tablet) {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto $spacing-lg;
+      }
+
+      img {
+        width: 35px;
+        height: 35px;
+        transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        filter: invert(24%) sepia(89%) saturate(3574%) hue-rotate(215deg) brightness(98%) contrast(98%);
+
+        @media (min-width: $breakpoint-tablet) {
+          width: 50px;
+          height: 50px;
+        }
+      }
+    }
+
+    .service-title {
+      font-size: 1.15rem;
+      color: $text-dark;
+      margin-bottom: $spacing-sm;
+      font-weight: $weight-extrabold;
+      transition: color $transition-normal;
+
+      @media (min-width: $breakpoint-tablet) {
+        font-size: 1.45rem;
+        margin-bottom: $spacing-md;
+      }
+    }
+
+    .service-description {
+      color: lighten($text-dark, 30%);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 0;
+
+      @media (min-width: $breakpoint-tablet) {
+        font-size: 1.05rem;
+        line-height: 1.7;
+      }
+    }
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}

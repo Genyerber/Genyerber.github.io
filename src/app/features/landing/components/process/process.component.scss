@@ -1,0 +1,255 @@
+@import '../../../../../styles/variables';
+
+.process {
+  padding: $spacing-xxl 0;
+  background: linear-gradient(180deg, $light-gray 0%, $white 100%);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent 0%, rgba($primary-blue, 0.2) 20%, rgba($primary-blue, 0.2) 80%, transparent 100%);
+    display: none;
+
+    @media (min-width: $breakpoint-tablet) {
+      display: block;
+    }
+  }
+
+  .process-header {
+    text-align: center;
+    margin-bottom: $spacing-xl;
+    animation: fadeInUp 0.8s ease-out;
+
+    @media (min-width: $breakpoint-tablet) {
+      margin-bottom: $spacing-xxl;
+    }
+
+    h2 {
+      color: $text-dark;
+      margin-bottom: $spacing-sm;
+      position: relative;
+      display: inline-block;
+      font-size: 2rem;
+
+      @media (min-width: $breakpoint-tablet) {
+        font-size: 2.75rem;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(90deg, $primary-blue, $cyan);
+        border-radius: 2px;
+      }
+    }
+
+    .process-subtitle {
+      font-size: 1.1rem;
+      color: lighten($text-dark, 25%);
+      margin-top: $spacing-md;
+
+      @media (min-width: $breakpoint-tablet) {
+        font-size: 1.25rem;
+      }
+    }
+  }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-md;
+    position: relative;
+
+    @media (min-width: $breakpoint-tablet) {
+      grid-template-columns: repeat(3, 1fr);
+      gap: $spacing-lg;
+    }
+  }
+
+  .step {
+    background: $white;
+    padding: $spacing-md $spacing-sm;
+    border-radius: 16px;
+    text-align: center;
+    position: relative;
+    transition: all $transition-normal;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 2px solid transparent;
+    animation: fadeInScale 0.6s ease-out backwards;
+
+    @media (min-width: $breakpoint-tablet) {
+      padding: $spacing-xl;
+      border-radius: 20px;
+    }
+
+    &:nth-child(1) {
+      animation-delay: 0.2s;
+    }
+
+    &:nth-child(2) {
+      animation-delay: 0.4s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.6s;
+      grid-column: span 2;
+
+      @media (min-width: $breakpoint-tablet) {
+        grid-column: span 1;
+      }
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba($primary-blue, 0.05), rgba($cyan, 0.05));
+      border-radius: 16px;
+      opacity: 0;
+      transition: opacity $transition-normal;
+      z-index: 0;
+
+      @media (min-width: $breakpoint-tablet) {
+        border-radius: 20px;
+      }
+    }
+
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba($primary-blue, 0.2);
+      border-color: $primary-blue;
+
+      &::before {
+        opacity: 1;
+      }
+
+      .step-number {
+        transform: translateX(-50%) scale(1.15) rotate(360deg);
+        box-shadow: 0 8px 25px rgba($primary-blue, 0.5);
+      }
+
+      .step-icon img {
+        transform: scale(1.2) rotateY(360deg);
+      }
+    }
+
+    > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-number {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, $primary-blue, $cyan);
+      color: $white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: $weight-extrabold;
+      font-family: $font-headings;
+      box-shadow: 0 6px 20px rgba($primary-blue, 0.4);
+      transition: all $transition-normal;
+
+      @media (min-width: $breakpoint-tablet) {
+        top: -25px;
+        width: 60px;
+        height: 60px;
+        font-size: 1.75rem;
+      }
+    }
+
+    .step-icon {
+      margin: $spacing-md 0 $spacing-sm;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      @media (min-width: $breakpoint-tablet) {
+        margin: $spacing-lg 0 $spacing-md;
+        height: 80px;
+      }
+
+      img {
+        width: 40px;
+        height: 40px;
+        margin: 0 auto;
+        filter: invert(24%) sepia(89%) saturate(3574%) hue-rotate(215deg) brightness(98%) contrast(98%);
+        transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+        @media (min-width: $breakpoint-tablet) {
+          width: 70px;
+          height: 70px;
+        }
+      }
+    }
+
+    .step-title {
+      font-size: 1.15rem;
+      color: $text-dark;
+      margin-bottom: $spacing-xs;
+      font-weight: $weight-extrabold;
+
+      @media (min-width: $breakpoint-tablet) {
+        font-size: 1.5rem;
+        margin-bottom: $spacing-md;
+      }
+    }
+
+    .step-description {
+      color: lighten($text-dark, 30%);
+      font-size: 0.9rem;
+      line-height: 1.4;
+      margin-bottom: 0;
+
+      @media (min-width: $breakpoint-tablet) {
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+    }
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

@@ -1,0 +1,19 @@
+<section id="process" class="process">
+  <div class="container">
+    <div class="process-header">
+      <h2>¿Cómo funciona?</h2>
+      <p class="process-subtitle">Tres pasos y listo.</p>
+    </div>
+
+    <div class="process-steps">
+      <div class="step" *ngFor="let step of steps">
+        <div class="step-number">{{ step.number }}</div>
+        <div class="step-icon">
+          <img [src]="'assets/icons/' + step.icon" [alt]="step.title">
+        </div>
+        <h3 class="step-title">{{ step.title }}</h3>
+        <p class="step-description">{{ step.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>

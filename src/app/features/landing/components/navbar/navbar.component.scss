@@ -1,0 +1,222 @@
+@import '../../../../../styles/variables';
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: $spacing-md 0;
+  transition: all $transition-normal;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+
+  &.scrolled {
+    background-color: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: $spacing-sm 0;
+  }
+
+  .navbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .navbar-logo {
+    animation: fadeInDown 0.6s ease-out;
+    
+    .logo {
+      height: 35px;
+      width: auto;
+      transition: transform $transition-normal;
+
+      @media (min-width: $breakpoint-tablet) {
+        height: 40px;
+      }
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .navbar-menu {
+    display: none;
+    list-style: none;
+    gap: $spacing-xl;
+
+    @media (min-width: $breakpoint-desktop) {
+      display: flex;
+    }
+
+    li {
+      position: relative;
+      
+      a {
+        font-weight: $weight-semibold;
+        color: $text-dark;
+        cursor: pointer;
+        transition: color $transition-fast;
+        font-size: 0.95rem;
+        padding: $spacing-xs 0;
+        display: block;
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background: linear-gradient(90deg, $primary-blue, $cyan);
+          transition: width $transition-normal;
+        }
+
+        &:hover {
+          color: $primary-blue;
+
+          &::after {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    &.active {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: $white;
+      padding: $spacing-lg $spacing-md;
+      gap: $spacing-md;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+      animation: slideDown 0.3s ease-out;
+
+      li a::after {
+        display: none;
+      }
+    }
+  }
+
+  .navbar-cta {
+    display: none;
+    animation: fadeInDown 0.8s ease-out;
+
+    @media (min-width: $breakpoint-desktop) {
+      display: block;
+    }
+  }
+
+  .navbar-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    padding: $spacing-xs;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    z-index: 1001;
+    border-radius: 8px;
+    transition: all $transition-fast;
+
+    @media (min-width: $breakpoint-desktop) {
+      display: none;
+    }
+
+    &:hover {
+      background-color: rgba($primary-blue, 0.1);
+    }
+
+    svg {
+      width: 30px;
+      height: 24px;
+      transition: transform $transition-normal;
+
+      rect {
+        transition: all $transition-normal;
+        transform-origin: center;
+      }
+    }
+
+    &.active {
+      svg {
+        rect:nth-child(1) {
+          transform: rotate(45deg) translate(7px, 7px);
+        }
+
+        rect:nth-child(2) {
+          opacity: 0;
+        }
+
+        rect:nth-child(3) {
+          transform: rotate(-45deg) translate(7px, -7px);
+        }
+      }
+    }
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, $primary-blue, darken($primary-blue, 5%));
+  color: $white;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: 10px;
+  font-weight: $weight-semibold;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 15px rgba($primary-blue, 0.25);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+  }
+
+  &:hover {
+    background: linear-gradient(135deg, darken($primary-blue, 5%), darken($primary-blue, 10%));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba($primary-blue, 0.4);
+
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

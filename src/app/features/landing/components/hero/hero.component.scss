@@ -1,0 +1,338 @@
+@import '../../../../../styles/variables';
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 140px 0 80px;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba($primary-blue, 0.03) 0%, rgba($cyan, 0.05) 100%);
+
+  @media (min-width: $breakpoint-tablet) {
+    padding: 160px 0 100px;
+  }
+
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+
+    .hero-bg-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.06;
+      animation: slowZoom 20s ease-in-out infinite alternate;
+    }
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba($primary-blue, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 8s ease-in-out infinite;
+    z-index: 0;
+
+    @media (min-width: $breakpoint-tablet) {
+      width: 800px;
+      height: 800px;
+    }
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba($cyan, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 10s ease-in-out infinite reverse;
+    z-index: 0;
+
+    @media (min-width: $breakpoint-tablet) {
+      width: 700px;
+      height: 700px;
+    }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    text-align: center;
+    margin: 0 auto;
+
+    @media (min-width: $breakpoint-tablet) {
+      text-align: left;
+      margin: 0;
+    }
+  }
+
+  .hero-title {
+    color: $text-dark;
+    margin-bottom: $spacing-lg;
+    line-height: 1.1;
+    font-size: 2.5rem;
+    animation: fadeInUp 0.8s ease-out;
+    background: linear-gradient(135deg, $text-dark 0%, lighten($text-dark, 15%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    @media (min-width: $breakpoint-tablet) {
+      font-size: 3.5rem;
+    }
+
+    @media (min-width: $breakpoint-desktop) {
+      font-size: 4rem;
+    }
+  }
+
+  .hero-subtitle {
+    font-size: 1.15rem;
+    color: lighten($text-dark, 20%);
+    margin-bottom: $spacing-xl;
+    line-height: 1.7;
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+
+    @media (min-width: $breakpoint-tablet) {
+      font-size: 1.35rem;
+    }
+  }
+
+  .hero-benefits {
+    list-style: none;
+    margin-bottom: $spacing-xl;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+
+    @media (min-width: $breakpoint-tablet) {
+      gap: $spacing-lg;
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: $spacing-md;
+      font-size: 1.05rem;
+      color: $text-dark;
+      padding: $spacing-sm $spacing-md;
+      background: rgba($white, 0.6);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      border: 1px solid rgba($primary-blue, 0.1);
+      animation: fadeInLeft 0.6s ease-out backwards;
+      transition: all $transition-normal;
+
+      @media (min-width: $breakpoint-tablet) {
+        font-size: 1.15rem;
+      }
+
+      &:hover {
+        background: rgba($white, 0.9);
+        border-color: rgba($primary-blue, 0.3);
+        transform: translateX(10px);
+        box-shadow: 0 4px 15px rgba($primary-blue, 0.1);
+      }
+
+      &:nth-child(1) {
+        animation-delay: 0.4s;
+      }
+
+      &:nth-child(2) {
+        animation-delay: 0.5s;
+      }
+
+      &:nth-child(3) {
+        animation-delay: 0.6s;
+      }
+
+      img {
+        width: 28px;
+        height: 28px;
+        flex-shrink: 0;
+        filter: invert(24%) sepia(89%) saturate(3574%) hue-rotate(215deg) brightness(98%) contrast(98%);
+      }
+
+      span {
+        font-weight: $weight-semibold;
+      }
+    }
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+    animation: fadeInUp 0.8s ease-out 0.7s backwards;
+
+    @media (min-width: $breakpoint-mobile) {
+      flex-direction: row;
+      justify-content: center;
+    }
+
+    @media (min-width: $breakpoint-tablet) {
+      justify-content: flex-start;
+    }
+  }
+
+  .hero-disclaimer {
+    font-size: 0.9rem;
+    color: lighten($text-dark, 35%);
+    font-style: italic;
+    animation: fadeIn 1s ease-out 0.9s backwards;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-xs;
+
+    @media (min-width: $breakpoint-tablet) {
+      justify-content: flex-start;
+    }
+
+    &::before {
+      content: '🔒';
+      font-size: 1rem;
+    }
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, $primary-blue, darken($primary-blue, 5%));
+  color: $white;
+  padding: $spacing-md $spacing-xl;
+  border-radius: 12px;
+  font-weight: $weight-bold;
+  font-size: 1.05rem;
+  box-shadow: 0 6px 20px rgba($primary-blue, 0.3);
+  position: relative;
+  overflow: hidden;
+  transition: all $transition-normal;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+  }
+
+  &:hover {
+    background: linear-gradient(135deg, darken($primary-blue, 5%), darken($primary-blue, 10%));
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba($primary-blue, 0.4);
+
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: $primary-blue;
+  padding: $spacing-md $spacing-xl;
+  border: 2px solid $primary-blue;
+  border-radius: 12px;
+  font-weight: $weight-bold;
+  font-size: 1.05rem;
+  position: relative;
+  overflow: hidden;
+  transition: all $transition-normal;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(135deg, $primary-blue, darken($primary-blue, 5%));
+    transition: width $transition-normal;
+    z-index: -1;
+  }
+
+  &:hover {
+    color: $white;
+    border-color: darken($primary-blue, 5%);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba($primary-blue, 0.3);
+
+    &::before {
+      width: 100%;
+    }
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-30px) translateX(20px);
+  }
+}
+
+@keyframes slowZoom {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
