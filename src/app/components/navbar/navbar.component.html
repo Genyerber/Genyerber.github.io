@@ -1,0 +1,35 @@
+<nav class="navbar" [class.scrolled]="scrolled()">
+  <div class="container nav-inner">
+
+    <a class="logo" href="#hero">
+      <span class="logo-bracket">&lt;</span>
+      <span class="logo-text">Genyerber</span>
+      <span class="logo-bracket">/&gt;</span>
+    </a>
+
+    <ul class="nav-links" [class.open]="menuOpen()">
+      @for (link of navLinks; track link.href) {
+        <li>
+          <a [href]="link.href" (click)="closeMenu()">{{ link.label }}</a>
+        </li>
+      }
+      <li>
+        <a href="cv_genyerber.pdf" download="CV_Genyerber_Ordoñez_FullStack.pdf" target="_blank" class="cv-btn" (click)="closeMenu()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Descargar CV
+        </a>
+      </li>
+    </ul>
+
+    <button class="hamburger" [class.active]="menuOpen()" (click)="toggleMenu()" aria-label="menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </div>
+</nav>

@@ -1,0 +1,70 @@
+<section class="section" id="projects">
+  <div class="container">
+
+    <div class="section-header">
+      <p class="section-label">// portafolio</p>
+      <h2 class="section-title">Proyectos <span class="gradient-text">destacados</span></h2>
+      <p class="section-subtitle">Soluciones reales llevadas a producción</p>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters">
+      @for (f of filters; track f) {
+        <button
+          class="filter-btn"
+          [class.active]="activeFilter() === f"
+          (click)="setFilter(f)"
+        >{{ f }}</button>
+      }
+    </div>
+
+    <!-- Projects grid -->
+    <div class="projects-grid">
+      @for (project of filtered; track project.title) {
+        <div class="project-card glass-card" [class.featured]="project.featured">
+          <!-- Card header -->
+          <div class="card-header" [style.background]="project.gradient">
+            <span class="project-icon">{{ project.icon }}</span>
+            @if (project.featured) {
+              <span class="featured-badge">⭐ Destacado</span>
+            }
+          </div>
+
+          <!-- Card body -->
+          <div class="card-body">
+            <h3 class="project-title">{{ project.title }}</h3>
+            <p class="project-subtitle">{{ project.subtitle }}</p>
+            <p class="project-desc">{{ project.description }}</p>
+
+            <!-- Tech chips -->
+            <div class="project-chips">
+              @for (h of project.highlights; track h) {
+                <span class="tech-chip" [style.border-color]="project.color + '50'" [style.color]="project.color">{{ h }}</span>
+              }
+            </div>
+
+            <!-- Links -->
+            @if (project.links.length > 0) {
+              <div class="project-links">
+                @for (link of project.links; track link.label) {
+                  <a [href]="link.url" target="_blank" class="project-link" [style.color]="project.color">
+                    <span>{{ link.icon }}</span>
+                    {{ link.label }}
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                      <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                  </a>
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Glow border on hover -->
+          <div class="card-glow" [style.background]="project.gradient"></div>
+        </div>
+      }
+    </div>
+
+  </div>
+</section>

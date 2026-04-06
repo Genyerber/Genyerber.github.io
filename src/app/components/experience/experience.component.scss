@@ -1,0 +1,162 @@
+.section-header {
+  margin-bottom: 64px;
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.timeline-line {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 24px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--accent-primary), transparent);
+  z-index: 0;
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  gap: 24px;
+  align-items: start;
+  position: relative;
+  z-index: 1;
+}
+
+.timeline-dot {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+  z-index: 2;
+
+  .pulse-ring {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px solid;
+    animation: pulse-ring 2s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.timeline-card {
+  padding: 28px 32px;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.company-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.company {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.role {
+  font-size: 14px;
+  color: var(--accent-primary);
+  font-weight: 500;
+  font-family: 'Fira Code', monospace;
+}
+
+.current-badge {
+  background: linear-gradient(135deg, var(--accent-primary), #8b5cf6);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: right;
+
+  .period, .location {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    justify-content: flex-end;
+
+    svg { flex-shrink: 0; }
+  }
+}
+
+.achievements {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+
+    .check-icon {
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    ::ng-deep strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .timeline-line { display: none; }
+
+  .timeline-item {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline-dot { display: none; }
+
+  .card-top {
+    flex-direction: column;
+
+    .card-meta {
+      text-align: left;
+      .period, .location { justify-content: flex-start; }
+    }
+  }
+}

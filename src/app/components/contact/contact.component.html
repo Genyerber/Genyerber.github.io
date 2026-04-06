@@ -1,0 +1,102 @@
+<section class="section" id="contact">
+  <div class="container">
+
+    <div class="section-header">
+      <p class="section-label">// contacto</p>
+      <h2 class="section-title">Hablemos <span class="gradient-text">juntos</span></h2>
+      <p class="section-subtitle">
+        Estoy disponible para nuevas oportunidades. ¿Tienes un proyecto o una vacante?
+        ¡Escríbeme!
+      </p>
+    </div>
+
+    <div class="contact-grid">
+
+      <!-- Left: info -->
+      <div class="contact-info">
+        <div class="info-card glass-card">
+          <h3>Información de contacto</h3>
+          <div class="contact-items">
+            @for (c of contacts; track c.label) {
+              <a [href]="c.href" target="_blank" class="contact-item">
+                <span class="contact-icon">{{ c.icon }}</span>
+                <div>
+                  <span class="contact-label">{{ c.label }}</span>
+                  <span class="contact-value">{{ c.value }}</span>
+                </div>
+                <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            }
+          </div>
+        </div>
+
+        <div class="avail-block glass-card">
+          <div class="avail-dot"></div>
+          <div>
+            <strong>Disponible ahora</strong>
+            <p>Cúcuta, Norte de Santander · Open to remote</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: form -->
+      <div class="contact-form-wrapper glass-card">
+        @if (!sent()) {
+          <form (ngSubmit)="sendMessage()" #f="ngForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Nombre</label>
+                <input id="name" name="name" type="text" [(ngModel)]="form.name" placeholder="Tu nombre" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" [(ngModel)]="form.email" placeholder="tu@email.com" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Asunto</label>
+              <input id="subject" name="subject" type="text" [(ngModel)]="form.subject" placeholder="¿De qué quieres hablar?" required>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Mensaje</label>
+              <textarea id="message" name="message" [(ngModel)]="form.message" placeholder="Cuéntame sobre tu proyecto u oportunidad..." rows="5" required></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary" [disabled]="f.invalid">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              </svg>
+              Enviar mensaje
+            </button>
+          </form>
+        } @else {
+          <div class="success-msg">
+            <span class="success-icon">✅</span>
+            <h3>¡Mensaje enviado!</h3>
+            <p>Se abrió tu cliente de correo. Gracias por escribirme, te responderé pronto.</p>
+          </div>
+        }
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <p class="footer-logo">
+      <span style="color: var(--accent-secondary)">&lt;</span>
+      <span style="color: var(--accent-primary)">Genyerber</span>
+      <span style="color: var(--accent-secondary)">/&gt;</span>
+    </p>
+    <p class="footer-copy">
+      © 2025 Genyerber Ordoñez · Hecho con Angular 19
+    </p>
+  </div>
+</footer>

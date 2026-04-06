@@ -1,0 +1,46 @@
+<section class="section" id="skills">
+  <div class="container">
+
+    <div class="section-header">
+      <p class="section-label">// stack tecnológico</p>
+      <h2 class="section-title">Mis <span class="gradient-text">habilidades</span></h2>
+      <p class="section-subtitle">Tecnologías con las que construyo soluciones de punta a punta</p>
+    </div>
+
+    <div class="skills-grid">
+      @for (cat of categories; track cat.label) {
+        <div class="glass-card skill-category">
+          <div class="cat-header">
+            <span class="cat-icon">{{ cat.icon }}</span>
+            <h3>{{ cat.label }}</h3>
+          </div>
+          <div class="skills-list">
+            @for (skill of cat.skills; track skill.name) {
+              <div class="skill-item">
+                <div class="skill-meta">
+                  <span class="skill-name">{{ skill.name }}</span>
+                  <span class="skill-level">{{ skill.level }}%</span>
+                </div>
+                <div class="skill-bar-track">
+                  <div
+                    class="skill-bar-fill"
+                    [style.width]="animated ? skill.level + '%' : '0%'"
+                    [style.background]="'linear-gradient(90deg, ' + skill.color + ', ' + skill.color + '99)'"
+                  ></div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Tech chips -->
+    <div class="tech-chips">
+      @for (chip of ['Swagger', 'Postman', 'Mapbox', 'JWT', 'CORS', 'Git Flow', 'Vercel', 'WordPress', 'Gmail SMTP', 'Google Drive API', 'Spring Boot', 'Flutter']; track chip) {
+        <span class="chip">{{ chip }}</span>
+      }
+    </div>
+
+  </div>
+</section>
