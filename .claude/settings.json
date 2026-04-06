@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e ':*)",
+      "Bash(node -e \"require\\('jimp'\\)\")",
+      "Bash(node -e \"require\\('png-to-ico'\\)\")",
+      "Bash(npm install:*)"
+    ]
+  }
+}
