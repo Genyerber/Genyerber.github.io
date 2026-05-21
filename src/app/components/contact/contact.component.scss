@@ -59,7 +59,7 @@
     }
   }
 
-  .contact-icon { font-size: 22px; flex-shrink: 0; }
+  .contact-icon { display: flex; flex-shrink: 0; color: var(--accent-primary); }
 
   div {
     flex: 1;
@@ -168,7 +168,8 @@ form {
   }
 }
 
-.success-msg {
+.success-msg,
+.error-msg {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -176,8 +177,6 @@ form {
   text-align: center;
   gap: 16px;
   min-height: 300px;
-
-  .success-icon { font-size: 56px; }
 
   h3 {
     font-size: 22px;
@@ -189,7 +188,26 @@ form {
     font-size: 14px;
     color: var(--text-secondary);
     max-width: 320px;
+    line-height: 1.6;
+    strong { color: var(--accent-primary); }
   }
+}
+
+.success-icon { display: flex; justify-content: center; }
+.error-icon   { display: flex; justify-content: center; }
+
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 /* Footer */

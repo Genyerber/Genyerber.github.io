@@ -1,3 +1,6 @@
+// ────────────────────────────────────────────────────────
+//  NAVBAR
+// ────────────────────────────────────────────────────────
 .navbar {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -13,6 +16,16 @@
     border-bottom: 1px solid rgba(108, 99, 255, 0.15);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
   }
+
+  // Cuando el menú está abierto: fondo sólido SIN backdrop-filter
+  // (el backdrop-filter rompería el position:fixed del mm-overlay hermano)
+  &.menu-open {
+    padding: 12px 0;
+    background: rgba(8, 8, 16, 0.98);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-bottom: 1px solid rgba(108, 99, 255, 0.2);
+  }
 }
 
 .nav-inner {
@@ -21,6 +34,7 @@
   justify-content: space-between;
 }
 
+// ── Logo ──────────────────────────────────────────────
 .logo {
   font-family: 'Fira Code', monospace;
   font-size: 20px;
@@ -29,12 +43,11 @@
   display: flex;
   align-items: center;
   gap: 2px;
-  transition: var(--transition);
+  transition: transform 0.25s ease;
+  z-index: 2;
+  position: relative;
 
-  .logo-bracket {
-    color: var(--accent-secondary);
-    font-size: 22px;
-  }
+  .logo-bracket { color: var(--accent-secondary); font-size: 22px; }
 
   .logo-text {
     background: linear-gradient(135deg, var(--accent-primary), #a78bfa);
@@ -43,11 +56,10 @@
     background-clip: text;
   }
 
-  &:hover {
-    transform: scale(1.05);
-  }
+  &:hover { transform: scale(1.05); }
 }
 
+// ── Desktop nav links ────────────────────────────────
 .nav-links {
   display: flex;
   align-items: center;
@@ -61,14 +73,12 @@
     font-weight: 500;
     padding: 8px 16px;
     border-radius: 50px;
-    transition: var(--transition);
-    position: relative;
+    transition: color 0.2s, background 0.2s;
 
-    &:hover {
-      color: var(--text-primary);
-      background: rgba(108, 99, 255, 0.1);
-    }
+    &:hover { color: var(--text-primary); background: rgba(108, 99, 255, 0.1); }
   }
+
+  .cv-dropdown-wrapper { position: relative; }
 
   .cv-btn {
     display: inline-flex;
@@ -79,6 +89,13 @@
     padding: 10px 20px;
     border-radius: 50px;
     font-weight: 600;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.25s ease;
+
+    .chevron { transition: transform 0.2s ease; &.open { transform: rotate(180deg); } }
 
     &:hover {
       background: linear-gradient(135deg, #8b5cf6, var(--accent-primary));
@@ -86,8 +103,42 @@
       box-shadow: var(--glow-primary);
     }
   }
+
+  .cv-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: rgba(16, 16, 24, 0.97);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(108, 99, 255, 0.25);
+    border-radius: 12px;
+    overflow: hidden;
+    min-width: 160px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.5);
+    animation: dropdownIn 0.15s ease;
+    z-index: 10;
+
+    .cv-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      color: var(--text-secondary) !important;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.15s, color 0.15s;
+
+      .cv-flag { font-size: 18px; }
+      &:hover { background: rgba(108,99,255,.15); color: var(--text-primary) !important; }
+      & + .cv-option { border-top: 1px solid rgba(108,99,255,.1); }
+    }
+  }
+
+  @media (max-width: 768px) { display: none; }
 }
 
+// ── Hamburger ────────────────────────────────────────
 .hamburger {
   display: none;
   flex-direction: column;
@@ -96,6 +147,8 @@
   border: none;
   cursor: pointer;
   padding: 8px;
+  position: relative;
+  z-index: 2;
 
   span {
     display: block;
@@ -103,7 +156,7 @@
     height: 2px;
     background: var(--text-primary);
     border-radius: 2px;
-    transition: var(--transition);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   &.active {
@@ -111,29 +164,265 @@
     span:nth-child(2) { opacity: 0; transform: scaleX(0); }
     span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
   }
+
+  @media (max-width: 768px) { display: flex; }
 }
 
-@media (max-width: 768px) {
-  .hamburger { display: flex; }
+// ────────────────────────────────────────────────────────
+//  MOBILE MENU OVERLAY  (sibling del nav — sin backdrop-filter parent)
+// ────────────────────────────────────────────────────────
+.mm-overlay {
+  display: none;
 
-  .nav-links {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(10, 10, 15, 0.97);
-    backdrop-filter: blur(20px);
-    flex-direction: column;
+  @media (max-width: 768px) {
+    display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 24px;
-    z-index: -1;
+
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    overflow: hidden;
+
+    // Fondo sólido garantizado
+    background: #09090f;
+
+    // Ornamentos de luz
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 55% at 10% 70%, rgba(108, 99, 255, 0.14) 0%, transparent 65%),
+        radial-gradient(ellipse 55% 45% at 90% 15%, rgba(67, 233, 123, 0.07) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    // ── Cerrado: círculo desde el botón hamburguesa ──
+    clip-path: circle(0px at calc(100% - 36px) 36px);
+    transition: clip-path 0.55s cubic-bezier(0.76, 0, 0.24, 1);
+    pointer-events: none;
+    visibility: hidden;
 
     &.open {
-      display: flex;
-    }
-
-    li a {
-      font-size: 22px;
-      padding: 12px 32px;
+      clip-path: circle(200vmax at calc(100% - 36px) 36px);
+      pointer-events: all;
+      visibility: visible;
     }
   }
+}
+
+// ── Orbes decorativos ────────────────────────────────
+.mm-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+}
+.mm-orb1 {
+  width: 280px; height: 280px;
+  background: rgba(108, 99, 255, 0.12);
+  bottom: 5%; left: -80px;
+}
+.mm-orb2 {
+  width: 200px; height: 200px;
+  background: rgba(67, 233, 123, 0.07);
+  top: 10%; right: -60px;
+}
+
+// ── Texto decorativo de fondo ────────────────────────
+.mm-deco {
+  position: absolute;
+  right: -20px;
+  bottom: 32px;
+  font-family: 'Fira Code', monospace;
+  font-size: clamp(80px, 22vw, 140px);
+  font-weight: 700;
+  color: rgba(108, 99, 255, 0.04);
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -4px;
+  line-height: 1;
+}
+
+// ── Contenido del menú ───────────────────────────────
+.mm-body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  width: 100%;
+  max-width: 400px;
+  padding: 80px 32px 48px;
+}
+
+// ── Nav links ────────────────────────────────────────
+.mm-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+@keyframes mmSlideIn {
+  from { opacity: 0; transform: translateX(32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.mm-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background 0.2s, border-color 0.2s;
+  opacity: 0;
+
+  .mm-overlay.open & {
+    animation: mmSlideIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .mm-idx {
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    color: #a78bfa;
+    opacity: 1;
+    min-width: 22px;
+    flex-shrink: 0;
+    letter-spacing: 0.5px;
+  }
+
+  .mm-text {
+    flex: 1;
+    font-size: clamp(24px, 7vw, 30px);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: rgba(255,255,255,0.7);
+    transition: color 0.2s;
+  }
+
+  .mm-arrow {
+    opacity: 0;
+    color: var(--accent-primary);
+    transform: translateX(-8px);
+    transition: opacity 0.2s, transform 0.25s ease;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background: rgba(108, 99, 255, 0.09);
+    border-color: rgba(108, 99, 255, 0.2);
+
+    .mm-text { color: #fff; }
+    .mm-arrow { opacity: 1; transform: translateX(0); }
+  }
+
+  &:active {
+    background: rgba(108, 99, 255, 0.18);
+  }
+}
+
+// ── Divisor ──────────────────────────────────────────
+@keyframes mmFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.mm-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(108,99,255,0.3) 40%, rgba(108,99,255,0.3) 60%, transparent);
+  opacity: 0;
+
+  .mm-overlay.open & {
+    animation: mmFadeIn 0.4s ease forwards;
+  }
+}
+
+// ── CV section ───────────────────────────────────────
+.mm-cv {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  opacity: 0;
+
+  .mm-overlay.open & {
+    animation: mmFadeIn 0.4s ease forwards;
+  }
+}
+
+.mm-cv-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #c4b5fd;
+  margin: 0;
+}
+
+.mm-cv-btns {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.mm-cv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 22px;
+  border: 1px solid rgba(108, 99, 255, 0.35);
+  border-radius: 50px;
+  text-decoration: none;
+  color: rgba(255,255,255,0.65);
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  background: rgba(108, 99, 255, 0.05);
+
+  &:hover {
+    background: rgba(108, 99, 255, 0.2);
+    border-color: var(--accent-primary);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(108, 99, 255, 0.25);
+  }
+}
+
+// ── Footer del menú ──────────────────────────────────
+.mm-footer {
+  opacity: 0;
+
+  .mm-overlay.open & {
+    animation: mmFadeIn 0.4s ease forwards;
+  }
+}
+
+.mm-avail {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.3px;
+}
+
+.mm-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #43e97b;
+  box-shadow: 0 0 8px #43e97b;
+  animation: pulse-glow 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+// ── Keyframes compartidos ────────────────────────────
+@keyframes dropdownIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

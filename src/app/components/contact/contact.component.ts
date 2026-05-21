@@ -1,6 +1,10 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+
+// Obtén tu access key gratis en https://web3forms.com (ingresa tu email, recibirás la key al instante)
+const WEB3FORMS_KEY = '18e1a3e2-96ec-43d0-852a-97909eb03b82';
 
 @Component({
   selector: 'app-contact',
@@ -10,6 +14,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './contact.component.scss'
 })
 export class ContactComponent {
+  private http = inject(HttpClient);
+
   form = {
     name: '',
     email: '',
@@ -17,8 +23,9 @@ export class ContactComponent {
     message: ''
   };
 
-  sent = signal(false);
+  sent    = signal(false);
   sending = signal(false);
+  error   = signal(false);
 
   contacts = [
     {
@@ -48,11 +55,37 @@ export class ContactComponent {
   ];
 
   sendMessage() {
-    const { name, email, subject, message } = this.form;
-    const body = `Hola Genyerber,%0D%0A%0D%0AMi nombre es ${encodeURIComponent(name)}.%0D%0A%0D%0A${encodeURIComponent(message)}`;
-    const mailtoUrl = `mailto:danielordonez777@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}&cc=${encodeURIComponent(email)}`;
-    window.open(mailtoUrl, '_blank');
-    this.sent.set(true);
-    setTimeout(() => this.sent.set(false), 4000);
+    this.sending.set(true);
+    this.error.set(false);
+
+    const payload = {
+      access_key: WEB3FORMS_KEY,
+      subject: `[Portafolio] ${this.form.subject}`,
+      from_name: this.form.name,
+      email: this.form.email,
+      message: this.form.message,
+      botcheck: '',
+    };
+
+    this.http.post<{ success: boolean }>('https://api.web3forms.com/submit', payload)
+      .subscribe({
+        next: (res) => {
+          this.sending.set(false);
+          if (res.success) {
+            this.sent.set(true);
+            this.form = { name: '', email: '', subject: '', message: '' };
+          } else {
+            this.error.set(true);
+          }
+        },
+        error: () => {
+          this.sending.set(false);
+          this.error.set(true);
+        }
+      });
+  }
+
+  retry() {
+    this.error.set(false);
   }
 }

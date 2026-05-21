@@ -1,4 +1,4 @@
-<nav class="navbar" [class.scrolled]="scrolled()">
+<nav class="navbar" [class.scrolled]="scrolled()" [class.menu-open]="menuOpen()">
   <div class="container nav-inner">
 
     <a class="logo" href="#hero">
@@ -7,29 +7,111 @@
       <span class="logo-bracket">/&gt;</span>
     </a>
 
-    <ul class="nav-links" [class.open]="menuOpen()">
+    <!-- Desktop nav -->
+    <ul class="nav-links">
       @for (link of navLinks; track link.href) {
-        <li>
-          <a [href]="link.href" (click)="closeMenu()">{{ link.label }}</a>
-        </li>
+        <li><a [href]="link.href">{{ link.label }}</a></li>
       }
-      <li>
-        <a href="cv_genyerber.pdf" download="CV_Genyerber_Ordoñez_FullStack.pdf" target="_blank" class="cv-btn" (click)="closeMenu()">
+      <li class="cv-dropdown-wrapper">
+        <button class="cv-btn" (click)="toggleCvDropdown($event)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
             <polyline points="7 10 12 15 17 10"/>
             <line x1="12" y1="15" x2="12" y2="3"/>
           </svg>
           Descargar CV
-        </a>
+          <svg class="chevron" [class.open]="cvDropdownOpen()" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        @if (cvDropdownOpen()) {
+          <div class="cv-dropdown">
+            @for (opt of cvOptions; track opt.label) {
+              <a [href]="opt.file" [download]="opt.name" class="cv-option">
+                <span class="cv-flag">{{ opt.flag }}</span>{{ opt.label }}
+              </a>
+            }
+          </div>
+        }
       </li>
     </ul>
 
-    <button class="hamburger" [class.active]="menuOpen()" (click)="toggleMenu()" aria-label="menu">
-      <span></span>
-      <span></span>
-      <span></span>
+    <button class="hamburger" [class.active]="menuOpen()" (click)="toggleMenu()" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
     </button>
 
   </div>
 </nav>
+
+<!-- ─────────────────────────────────────────────────────────
+     MOBILE MENU — sibling del nav para evitar el backdrop-filter
+     que rompía position:fixed de los hijos
+──────────────────────────────────────────────────────────── -->
+<div class="mm-overlay" [class.open]="menuOpen()">
+
+  <!-- Orbes decorativos -->
+  <div class="mm-orb mm-orb1"></div>
+  <div class="mm-orb mm-orb2"></div>
+  <!-- Texto decorativo de fondo -->
+  <span class="mm-deco" aria-hidden="true">&lt;/&gt;</span>
+
+  <div class="mm-body">
+
+    <!-- Nav links -->
+    <nav class="mm-nav" role="navigation">
+      @for (link of navLinks; track link.href; let i = $index) {
+        <a
+          [href]="link.href"
+          class="mm-link"
+          (click)="closeMenu()"
+          [style.animation-delay]="menuOpen() ? (0.05 + i * 0.07) + 's' : '0s'"
+        >
+          <span class="mm-idx">{{ (i + 1) < 10 ? '0' + (i + 1) : (i + 1) }}</span>
+          <span class="mm-text">{{ link.label }}</span>
+          <svg class="mm-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      }
+    </nav>
+
+    <!-- Divisor -->
+    <div
+      class="mm-divider"
+      [style.animation-delay]="menuOpen() ? (0.05 + navLinks.length * 0.07) + 's' : '0s'"
+    ></div>
+
+    <!-- CV section -->
+    <div
+      class="mm-cv"
+      [style.animation-delay]="menuOpen() ? (0.1 + navLinks.length * 0.07) + 's' : '0s'"
+    >
+      <p class="mm-cv-label">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Descargar CV
+      </p>
+      <div class="mm-cv-btns">
+        @for (opt of cvOptions; track opt.label) {
+          <a [href]="opt.file" [download]="opt.name" class="mm-cv-btn" (click)="closeMenu()">
+            {{ opt.flag }}&nbsp; {{ opt.label }}
+          </a>
+        }
+      </div>
+    </div>
+
+    <!-- Footer del menú -->
+    <div
+      class="mm-footer"
+      [style.animation-delay]="menuOpen() ? (0.15 + navLinks.length * 0.07) + 's' : '0s'"
+    >
+      <span class="mm-avail">
+        <span class="mm-dot"></span>Disponible para proyectos
+      </span>
+    </div>
+
+  </div>
+</div>

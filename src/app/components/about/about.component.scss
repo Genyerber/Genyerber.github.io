@@ -71,7 +71,8 @@
   cursor: default;
 
   .highlight-icon {
-    font-size: 28px;
+    display: flex;
+    color: var(--accent-primary);
     margin-bottom: 4px;
   }
 
